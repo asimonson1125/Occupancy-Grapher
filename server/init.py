@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer
 
 app = Flask(__name__)
-app.config.from_pyfile(os.path.join(os.getcwd(), "server/config.py"))
+app.config.from_pyfile(os.path.join(os.getcwd(), "config.py"))
 # Allow all domain names to cross domain
 CORS(app, resources={r"/*": {"origins": "*"}})
 

@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from datetime import datetime
 
 from init import app, db, Occupancy
+import maths
 
 @app.route('/submit', methods=['POST'])
 def submission():
@@ -19,5 +20,10 @@ def submission():
     db.session.add(occupancy)
     db.session.commit()
     return "Data recieved.", 200, {'Content-Type': 'application/json'}
+
+@app.route('/graphs', methods=['GET'])
+def graphs():
+    day = maths.getDay()
+    return render_template("graph.html", template_folder='templates', lower=[2,3,4,5,4,3,2], times=day)
 
 app.run()

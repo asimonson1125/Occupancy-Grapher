@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <body>
+    <canvas id="lowerChart" style="width: 100%; max-width: 1200px"></canvas>
+
+    <script>
+        const xVals = [];
+        const yVals = [];
+        {% for i in times %}
+        xVals.push("{{i}}");
+        {% endfor %}
+        {% for i in lower %}
+        yVals.push("{{i}}");
+        {% endfor %}
+
+      new Chart("lowerChart", {
+        type: "line",
+        data: {
+          labels: xVals,
+          datasets: [
+            {
+              fill: false,
+              lineTension: 0,
+              backgroundColor: "rgba(0,0,255,1.0)",
+              borderColor: "rgba(0,0,255,0.1)",
+              data: yVals,
+            },
+          ],
+        },
+        options: {
+          legend: { display: false },
+          scales: {
+            yAxes: [{ ticks: { min: 0, max: 100 } }],
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
