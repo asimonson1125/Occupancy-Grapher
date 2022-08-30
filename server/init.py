@@ -3,6 +3,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer
+from datetime import datetime
 
 app = Flask(__name__)
 app.config.from_pyfile(os.path.join(os.getcwd(), "config.py"))
@@ -47,3 +48,17 @@ class Occupancy(db.Model):
 
     def get_id(self):
         return self.time
+
+def submit(data):
+    time = datetime.now()
+    weekday = time.weekday()
+    date = time.date()
+    hour = time.hour
+    minute = time.minute
+    print(f"\nData from {weekday}, {date} at {hour}:{minute}")
+    print("Lower Fitness Center occupant count: " + data['lower'])
+    print("Upper Fitness Center occupant count: " + data['upper'])
+    print("Aquatics Center occupant count: " + data['aquatics'] + "\n")
+    occupancy = Occupancy(time, date, hour, minute, weekday, data['lower'], data['upper'], data['aquatics'])
+    db.session.add(occupancy)
+    db.session.commit()
