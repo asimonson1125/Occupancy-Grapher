@@ -1,11 +1,7 @@
-from flask import Flask, request, jsonify, render_template
-from flask_cors import CORS
+from flask import Flask, request, jsonify
 from datetime import datetime
 
-app = Flask(__name__)
-# Allow all domain names to cross domain
-CORS(app, resources={r"/*": {"origins": "*"}})
-
+from init import app, db, Occupancy
 
 @app.route('/submit', methods=['POST'])
 def submission():
@@ -16,11 +12,13 @@ def submission():
     minute = time.minute
     timeinfo = {'weekday': weekday, 'date': date, 'hour': hour, 'minute': minute}
     data = request.get_json()
-    print("Data from {weekday}, {date} at {hour}:{minute}".format(**timeinfo))
+    print("\nData from {weekday}, {date} at {hour}:{minute}".format(**timeinfo))
     print("Lower Fitness Center occupant count: " + data['lower'])
     print("Upper Fitness Center occupant count: " + data['upper'])
-    print("Aquatics Center occupant count: " + data['aquatics'])
+    print("Aquatics Center occupant count: " + data['aquatics'] + "\n")
+    occupancy = Occupancy(time, date, hour, minute, weekday, data['lower'], data['upper'], data['aquatics'])
+    db.session.add(occupancy)
+    db.session.commit()
     return "Data recieved.", 200, {'Content-Type': 'application/json'}
-
 
 app.run()
