@@ -10,9 +10,8 @@ def submission():
     date = time.date()
     hour = time.hour
     minute = time.minute
-    timeinfo = {'weekday': weekday, 'date': date, 'hour': hour, 'minute': minute}
     data = request.get_json()
-    print("\nData from {weekday}, {date} at {hour}:{minute}".format(**timeinfo))
+    print(f"\nData from {weekday}, {date} at {hour}:{minute}")
     print("Lower Fitness Center occupant count: " + data['lower'])
     print("Upper Fitness Center occupant count: " + data['upper'])
     print("Aquatics Center occupant count: " + data['aquatics'] + "\n")
