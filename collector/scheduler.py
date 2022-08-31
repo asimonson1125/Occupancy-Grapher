@@ -2,7 +2,12 @@ import schedule
 from reqs import getFacilityOccupancy, getStartEndHour
 from threading import Thread
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
+from pytz import timezone
+
+def getOffset():
+    tz = timezone('US/Eastern')
+    return datetime.now().hour - datetime.now(tz).hour
 
 def format24Time(hour, minute):
     fHour = hour
@@ -20,17 +25,18 @@ def format24Time(hour, minute):
 def getSchedule():
     start, end = getStartEndHour()
     now = datetime.now()
+    offset = timedelta(hours=getOffset())
     for i in range(end - start):
         if now.hour <= i:
             for x in range(12):
                 if now.hour != i or now.minute < x:
-                    t = format24Time(i+start, x*5)
+                    t = format24Time(i+start-offset, x*5)
                     schedule.every().day.at(t).do(getFacilityOccupancy)
-    schedule.every().day.at(str(end) + ":00").do(getFacilityOccupancy)
+    schedule.every().day.at(str(end-offset) + ":00").do(getFacilityOccupancy)
     
 
 def startScheduler():
-    schedule.every().day.at("00:00").do(getSchedule)
+    schedule.every().day.at("04:30").do(getSchedule)
     Thread(target=runSchedule).start()
 
 def runSchedule():

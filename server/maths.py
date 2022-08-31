@@ -1,4 +1,6 @@
 from time import time
+from pytz import timezone
+from datetime import datetime
 
 def getDay():
     times = []
@@ -18,6 +20,10 @@ def getDay():
             
             times.append(f"{hour}:{minute}")
     return times
+
+def getOffset():
+    tz = timezone('US/Eastern')
+    return datetime.now().hour - datetime.now(tz).hour
 
 def getCombo(lower, upper):
     combo = []

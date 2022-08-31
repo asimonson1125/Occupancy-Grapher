@@ -3,7 +3,9 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer
-from datetime import datetime
+from datetime import datetime, timedelta
+
+from maths import getOffset
 
 app = Flask(__name__)
 app.config.from_pyfile(os.path.join(os.getcwd(), "config.py"))
@@ -50,7 +52,7 @@ class Occupancy(db.Model):
         return self.time
 
 def submit(data):
-    time = datetime.now()
+    time = datetime.now() - timedelta(hours=getOffset())
     weekday = time.weekday()
     date = time.date()
     hour = time.hour
