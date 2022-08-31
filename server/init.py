@@ -62,3 +62,5 @@ def submit(data):
     occupancy = Occupancy(time, date, hour, minute, weekday, data['lower'], data['upper'], data['aquatics'])
     db.session.add(occupancy)
     db.session.commit()
+
+db.create_all()
