@@ -13,6 +13,8 @@ def getDay():
             minute = str(x * 5)
             if x == 0:
                 minute = "00"
+            elif x == 1:
+                minute = "05"
             
             times.append(f"{hour}:{minute}")
     return times
