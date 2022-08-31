@@ -25,14 +25,14 @@ def format24Time(hour, minute):
 def getSchedule():
     start, end = getStartEndHour()
     now = datetime.now()
-    offset = timedelta(hours=getOffset())
+    offset = getOffset()
     for i in range(end - start):
-        if now.hour <= i:
+        if now.hour <= i+start:
             for x in range(12):
-                if now.hour != i or now.minute < x:
+                if now.hour != i+start or now.minute < x:
                     t = format24Time(i+start-offset, x*5)
                     schedule.every().day.at(t).do(getFacilityOccupancy)
-    schedule.every().day.at(str(end-getOffset()) + ":00").do(getFacilityOccupancy)
+    schedule.every().day.at(str(end-offset) + ":00").do(getFacilityOccupancy)
     
 
 def startScheduler():
