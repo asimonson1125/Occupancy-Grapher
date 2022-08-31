@@ -32,7 +32,7 @@ def getSchedule():
                 if now.hour != i or now.minute < x:
                     t = format24Time(i+start-offset, x*5)
                     schedule.every().day.at(t).do(getFacilityOccupancy)
-    schedule.every().day.at(str(end-offset) + ":00").do(getFacilityOccupancy)
+    schedule.every().day.at(str(end-getOffset()) + ":00").do(getFacilityOccupancy)
     
 
 def startScheduler():
