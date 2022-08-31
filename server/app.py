@@ -32,5 +32,4 @@ def graphs():
     return render_template("graph.html", template_folder='templates', lower=lower, upper=upper, combo=combo,  aquatics=aquatics, times=times)
 
 if __name__ == '__main__':
-    maths.startScheduler()
     app.run()
