@@ -3,14 +3,14 @@ from time import time
 def getDay():
     times = []
     for i in range(24):
-        for x in range(4):
+        for x in range(12):
             hour = i
             if hour < 10:
                 hour = "0" + str(i)
             else:
                 hour = str(hour)
             
-            minute = str(x % 4 * 15)
+            minute = str(x * 5)
             if x == 0:
                 minute = "00"
             

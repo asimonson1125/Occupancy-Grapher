@@ -34,13 +34,13 @@ class Occupancy(db.Model):
         self.aquatics = aquatics
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return '<id {}>'.format(self.time)
 
     def to_json(self):
-        return {"time": self.uid,
-                "date": self.firstname,
-                "hour": self.lastname,
-                "minute": self.picture,
+        return {"time": self.time,
+                "date": self.date,
+                "hour": self.hour,
+                "minute": self.minute,
                 "weekday": self.weekday,
                 "lower": self.lower,
                 "upper": self.upper,
