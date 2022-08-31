@@ -1,5 +1,5 @@
 import schedule 
-from reqs import getFacilityOccupancy
+from reqs import getFacilityOccupancy, getStartEndHour
 from threading import Thread
 import time
 
@@ -16,11 +16,17 @@ def format24Time(hour, minute):
     
     return(f"{fHour}:{fMinute}")
 
-def startScheduler():
-    for i in range(24):
+def getSchedule():
+    start, end = getStartEndHour()
+    for i in range(end - start):
         for x in range(12):
-            t = format24Time(i, x*5)
+            t = format24Time(i+start, x*5)
             schedule.every().day.at(t).do(getFacilityOccupancy)
+    schedule.every().day.at(str(end) + ":00").do(getFacilityOccupancy)
+    
+
+def startScheduler():
+    schedule.every().day.at("03:00").do(getSchedule)
     Thread(target=runSchedule).start()
 
 def runSchedule():
@@ -31,4 +37,5 @@ def runSchedule():
         time.sleep(10)
 
 if __name__ == '__main__':
+    getSchedule()
     startScheduler()

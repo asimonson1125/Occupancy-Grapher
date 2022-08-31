@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from os import environ as env
+from schedule import CancelJob
 
 serverIP = env.get('serverIP', 'http://127.0.0.1:8000')
 
@@ -19,7 +20,28 @@ def getFacilityOccupancy():
            }
 
     submit(out)
+    return CancelJob
 
 def submit(data):
        r = requests.post(serverIP + "/submit", json=data)
        print("sent data with code: " + str(r.status_code))
+
+
+def parse(s):
+    type = s[len(s)-2:]
+    o = int(s[:len(s)-2])
+    if(type == 'pm'):
+        o += 12
+    return o
+# document.querySelector('.columns table').querySelectorAll('tr')[1].querySelectorAll('td')[2].textContent.split(' ')
+# Making a GET request
+def getStartEndHour():
+       r = requests.get("https://www.rit.edu/fa/arenas/gordon-field-house/facility-hours")
+       
+       # Parsing the HTML
+       soup = BeautifulSoup(r.content, 'html.parser')
+
+       s = soup.find('div', class_='columns').find('table').find_all('tr')[1].find_all('td')[2]
+       content = s.string.split(' ')
+
+       return(parse(content[0]), parse(content[2]))

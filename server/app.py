@@ -19,12 +19,20 @@ def sample():
 @app.route('/graphs', methods=['GET'])
 def graphs():
     todayData = Occupancy.query.filter(Occupancy.date == str(datetime.now().date())).all()
-    times = []
+    times = maths.getDay()
     lower = []
     upper = []
     aquatics = []
+    i = 0
+    formatted = maths.format24Time(todayData[0].hour, todayData[0].minute)
+    while(formatted != times[i]):
+        i += 1
+        if(i == len(times)):
+            break
+        lower.append(0)
+        upper.append(0)
+        aquatics.append(0)
     for i in todayData:
-        times.append(maths.formatTime(i.hour, i.minute))
         lower.append(i.lower)
         upper.append(i.upper)
         aquatics.append(i.aquatics)

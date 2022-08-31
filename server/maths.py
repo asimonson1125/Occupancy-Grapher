@@ -4,10 +4,8 @@ def getDay():
     times = []
     for i in range(24):
         for x in range(4):
-            hour = i % 12
-            if i == 0 or i == 12:
-                hour = "12"
-            elif hour < 10:
+            hour = i
+            if hour < 10:
                 hour = "0" + str(i)
             else:
                 hour = str(hour)
@@ -25,11 +23,9 @@ def getCombo(lower, upper):
         combo.append((lower[i] + upper[i])/2)
     return combo
 
-def formatTime(hour, minute):
-    fHour = hour % 12
-    if fHour == 0 or fHour == 12:
-        fHour = "12"
-    elif fHour < 10:
+def format24Time(hour, minute):
+    fHour = hour
+    if fHour < 10:
         fHour = "0" + str(hour)
     else:
         fHour = str(fHour)
