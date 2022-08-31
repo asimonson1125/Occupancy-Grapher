@@ -18,8 +18,8 @@ def format24Time(hour, minute):
 
 def startScheduler():
     for i in range(24):
-        for x in range(60):
-            t = format24Time(i, x)
+        for x in range(12):
+            t = format24Time(i, x*5)
             schedule.every().day.at(t).do(getFacilityOccupancy)
     Thread(target=runSchedule).start()
 
