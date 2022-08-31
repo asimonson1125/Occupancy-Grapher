@@ -2,16 +2,23 @@
 <html>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   <body>
-    <canvas id="lowerChart" style="width: 100%; max-width: 1200px"></canvas>
+    <canvas id="lowerChart" style="max-height: 75%; max-width: 75%"></canvas>
+    <canvas id="aquaticsChart" style="max-height: 75%; max-width: 75%"></canvas>
 
     <script>
-        const xVals = [];
-        const yVals = [];
+        let xVals = [];
+        let lower = [];
+        let upper = [];
+        let combo = [];
+        let aquatics = [];
         {% for i in times %}
         xVals.push("{{i}}");
         {% endfor %}
-        {% for i in lower %}
-        yVals.push("{{i}}");
+        {% for i in range(lower|length) %}
+        lower.push("{{lower[i]}}");
+        upper.push("{{upper[i]}}");
+        combo.push("{{combo[i]}}");
+        aquatics.push("{{aquatics[i]}}");
         {% endfor %}
 
       new Chart("lowerChart", {
@@ -21,17 +28,47 @@
           datasets: [
             {
               fill: false,
+              borderColor: "rgba(0,0,255,.1)",
+              data: lower,
+            },
+            {
+              fill: false,
+              borderColor: "rgba(255,0,0,.1)",
+              data: upper
+            },
+            {
+              fill: false,
+              borderColor: "rgba(0, 255, 0, 1)",
+              data: combo
+            }
+          ],
+        },
+        options: {
+          legend: { display: false },
+          scales: {
+            yAxes: [{ ticks: { min: 0, max: 170 } }],
+          },
+        },
+      });
+
+      new Chart("aquaticsChart", {
+        type: "line",
+        data: {
+          labels: xVals,
+          datasets: [
+            {
+              fill: false,
               lineTension: 0,
               backgroundColor: "rgba(0,0,255,1.0)",
               borderColor: "rgba(0,0,255,0.1)",
-              data: yVals,
+              data: aquatics,
             },
           ],
         },
         options: {
           legend: { display: false },
           scales: {
-            yAxes: [{ ticks: { min: 0, max: 100 } }],
+            yAxes: [{ ticks: { min: 0, max: 120 } }],
           },
         },
       });

@@ -23,6 +23,12 @@ def getDay():
             times.append(f"{hour}:{minute}")
     return times
 
+def getCombo(lower, upper):
+    combo = []
+    for i in range(len(lower)):
+        combo.append((lower[i] + upper[i])/2)
+    return combo
+
 def formatTime(hour, minute):
     fHour = hour % 12
     if fHour == 0 or fHour == 12:
@@ -34,7 +40,7 @@ def formatTime(hour, minute):
 
     fMinute = str(minute)
     if minute < 10:
-        fMinute = "0" + minute
+        fMinute = "0" + str(minute)
     
     return(f"{fHour}:{fMinute}")
 
