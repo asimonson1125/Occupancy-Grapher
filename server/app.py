@@ -18,7 +18,7 @@ def sample():
 
 @app.route('/graphs', methods=['GET'])
 def graphs():
-    todayData = Occupancy.query.filter(Occupancy.date == datetime.now().date()).all()
+    todayData = Occupancy.query.filter(Occupancy.date == str(datetime.now().date())).all()
     times = []
     lower = []
     upper = []
