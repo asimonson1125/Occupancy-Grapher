@@ -1,0 +1,10 @@
+version: '3'
+services:
+  collector:
+    build:
+      context: .
+      dockerfile: Dockerfile_collector
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile_server
