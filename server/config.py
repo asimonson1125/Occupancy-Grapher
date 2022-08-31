@@ -5,6 +5,9 @@ try:
 except ImportError:
     pass
 
+IP = env.get('IP', '0.0.0.0')
+PORT = env.get('PORT', 8080)
+SERVER_NAME = env.get('SERVER_NAME', 'localhost:8080')
 PREFERRED_URL_SCHEME = env.get('PREFERRED_URL_SCHEME', 'https')
 POSTGRESQL_USER = env.get('POSTGRESQL_USER', '')
 POSTGRESQL_PASSWORD = env.get('POSTGRESQL_PASSWORD')
