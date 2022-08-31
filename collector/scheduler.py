@@ -2,6 +2,7 @@ import schedule
 from reqs import getFacilityOccupancy, getStartEndHour
 from threading import Thread
 import time
+from datetime import datetime
 
 def format24Time(hour, minute):
     fHour = hour
@@ -18,15 +19,18 @@ def format24Time(hour, minute):
 
 def getSchedule():
     start, end = getStartEndHour()
+    now = datetime.now()
     for i in range(end - start):
-        for x in range(12):
-            t = format24Time(i+start, x*5)
-            schedule.every().day.at(t).do(getFacilityOccupancy)
+        if now.hour <= i:
+            for x in range(12):
+                if now.hour != i or now.minute < x:
+                    t = format24Time(i+start, x*5)
+                    schedule.every().day.at(t).do(getFacilityOccupancy)
     schedule.every().day.at(str(end) + ":00").do(getFacilityOccupancy)
     
 
 def startScheduler():
-    schedule.every().day.at("03:00").do(getSchedule)
+    schedule.every().day.at("00:00").do(getSchedule)
     Thread(target=runSchedule).start()
 
 def runSchedule():
