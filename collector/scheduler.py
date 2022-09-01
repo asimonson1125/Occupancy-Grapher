@@ -10,9 +10,9 @@ def getOffset():
     return datetime.now().hour - datetime.now(tz).hour
 
 def format24Time(hour, minute):
-    fHour = hour
+    fHour = hour % 24
     if fHour < 10:
-        fHour = "0" + str(hour)
+        fHour = "0" + str(hour % 24)
     else:
         fHour = str(fHour)
 
