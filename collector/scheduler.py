@@ -26,13 +26,17 @@ def getSchedule():
     start, end = getStartEndHour()
     now = datetime.now()
     offset = getOffset()
+    if now.hour - offset < 0:
+        return
     for i in range(end - start):
         if now.hour <= i+start:
             for x in range(12):
                 if not(now.hour == i+start and now.minute >= x*5):
                     t = format24Time(i+start-offset, x*5)
                     schedule.every().day.at(t).do(getFacilityOccupancy)
-    schedule.every().day.at(str(end-offset) + ":00").do(getFacilityOccupancy)
+    endoff = end-offset
+    if endoff >= 0:
+        schedule.every().day.at(str(endoff) + ":00").do(getFacilityOccupancy)
     
 
 def startScheduler():
@@ -47,5 +51,5 @@ def runSchedule():
         time.sleep(10)
 
 if __name__ == '__main__':
-    getSchedule() # DO NOT START ME BEFORE 4:30AM OTHERWISE THIS COULD BE DOUBLED
+    getSchedule()
     startScheduler()
