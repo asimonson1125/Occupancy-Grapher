@@ -35,7 +35,7 @@ def getSchedule():
     if now.hour - offset < 0:
         return
     for i in range(end - start):
-        if now.hour <= i+start:
+        if now.hour-offset <= i+start:
             for x in range(12):
                 if not(now.hour - offset == i+start and now.minute >= x*5):
                     t = format24Time((i+start+offset) % 24, x*5)
