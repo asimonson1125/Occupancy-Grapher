@@ -1,5 +1,5 @@
 from flask import request, render_template
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from init import app, Occupancy, submit
 import maths
@@ -18,7 +18,7 @@ def sample():
 
 @app.route('/graphs', methods=['GET'])
 def graphs():
-    todayData = Occupancy.query.filter(Occupancy.date == str(datetime.now().date())).all()
+    todayData = Occupancy.query.filter(Occupancy.date == str((datetime.now()-timedelta(hours=maths.getOffset())).date())).all()
     if len(todayData) == 0:
         return "<h1>No data for today! </h3>"
     times = maths.getDay()
