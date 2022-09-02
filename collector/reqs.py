@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from os import environ as env
 from schedule import CancelJob
 
-serverIP = env.get('serverIP', 'http://127.0.0.1:8000')
+serverIP = env.get('serverIP', 'http://localhost:8080')
 
 def getFacilityOccupancy():
     print("Getting occupancy")

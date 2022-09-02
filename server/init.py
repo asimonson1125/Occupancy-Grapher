@@ -53,8 +53,8 @@ class Occupancy(db.Model):
         return self.time
     
     def __lt__(self,other):
-        one = datetime.strptime(self.time, '%Y-%m-%d %H:%M:%S')
-        two = datetime.strptime(other.time, '%Y-%m-%d %H:%M:%S')
+        one = datetime.strptime(self.time, '%Y-%m-%d %H:%M:%S %Z%z')
+        two = datetime.strptime(other.time, '%Y-%m-%d %H:%M:%S %Z%z')
         return(one < two)
             
 
