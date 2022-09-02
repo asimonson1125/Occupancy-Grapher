@@ -4,8 +4,9 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer
 from datetime import datetime, timedelta
+from pytz import timezone
 
-from maths import getOffset
+est = timezone('US/Eastern')
 
 app = Flask(__name__)
 app.config.from_pyfile(os.path.join(os.getcwd(), "config.py"))
@@ -52,7 +53,7 @@ class Occupancy(db.Model):
         return self.time
 
 def submit(data):
-    time = datetime.now() - timedelta(hours=getOffset())
+    time = datetime.now(est).date()
     weekday = time.weekday()
     date = time.date()
     hour = time.hour

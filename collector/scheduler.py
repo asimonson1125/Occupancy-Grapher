@@ -5,11 +5,7 @@ import time
 from datetime import datetime, timedelta
 from pytz import timezone
 
-
-def getOffset():
-    tz = timezone('US/Eastern')
-    return datetime.now().hour - datetime.now(tz).hour
-
+est = timezone('US/Eastern')
 
 def format24Time(hour, minute):
     fHour = hour % 24
@@ -29,18 +25,16 @@ def getSchedule():
     schedule.clear()
     schedule.every().day.at("04:30").do(getSchedule)
     start, end = getStartEndHour()
-    now = datetime.now()
-    offset = getOffset()
-    offset = 4
-    if now.hour - offset < 0:
+    now = datetime.now(est)
+    if now.hour < 0:
         return
     for i in range(end - start):
-        if now.hour-offset <= i+start:
+        if now.hour <= i+start:
             for x in range(12):
-                if not(now.hour - offset == i+start and now.minute >= x*5):
-                    t = format24Time((i+start+offset) % 24, x*5)
+                if not(now.hour == i+start and now.minute >= x*5):
+                    t = format24Time((i+start) % 24, x*5)
                     schedule.every().day.at(t).do(getFacilityOccupancy)
-    endoff = (end+offset) % 24
+    endoff = (end) % 24
     if endoff < 10:
         endoff = "0" + str(endoff)
         endoff = str(endoff)
@@ -56,6 +50,5 @@ def runSchedule():
 
 
 if __name__ == '__main__':
-    # Starting the server after midnight before facility closing (which may happen if server offset >1) leads to ignoring the rest of that day
     getSchedule()
     Thread(target=runSchedule).start()

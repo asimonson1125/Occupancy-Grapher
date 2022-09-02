@@ -21,10 +21,6 @@ def getDay():
             times.append(f"{hour}:{minute}")
     return times
 
-def getOffset():
-    tz = timezone('US/Eastern')
-    return datetime.now(tz).hour - datetime.now().hour
-
 def getCombo(lower, upper):
     combo = []
     for i in range(len(lower)):
