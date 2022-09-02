@@ -53,7 +53,7 @@ class Occupancy(db.Model):
         return self.time
 
 def submit(data):
-    time = datetime.now(est).date()
+    time = datetime.now(est)
     weekday = time.weekday()
     date = time.date()
     hour = time.hour
