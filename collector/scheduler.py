@@ -25,7 +25,7 @@ def getOffset():
 
 def getSchedule():
     schedule.clear()
-    negOffset = str((24 - getOffset()) % 24)
+    negOffset = str((24 + getOffset()) % 24)
     if int(negOffset) < 10:
         negOffset = "0" + negOffset
     schedule.every().day.at(negOffset + ":00").do(getSchedule)
