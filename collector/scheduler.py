@@ -37,7 +37,7 @@ def getSchedule():
     endoff = (end) % 24
     if endoff < 10:
         endoff = "0" + str(endoff)
-        endoff = str(endoff)
+    endoff = str(endoff)
     schedule.every().day.at(endoff + ":00").do(getFacilityOccupancy)    
 
 
