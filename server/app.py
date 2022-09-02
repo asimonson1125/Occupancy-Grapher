@@ -19,6 +19,7 @@ def sample():
 @app.route('/graphs', methods=['GET'])
 def graphs():
     todayData = Occupancy.query.filter(Occupancy.date == str(datetime.now(est).date())).all()
+    todayData.sort()
     if len(todayData) == 0:
         return "<h1>No data for today! </h3>"
     times = maths.getDay()

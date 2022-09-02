@@ -3,7 +3,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, strptime
 from pytz import timezone
 
 est = timezone('US/Eastern')
@@ -51,6 +51,12 @@ class Occupancy(db.Model):
 
     def get_id(self):
         return self.time
+    
+    def __lt__(self,other):
+        one = datetime.strptime(self.time, '%Y-%m-%d %H:%M:%S')
+        two = datetime.strptime(other.time, '%Y-%m-%d %H:%M:%S')
+        return(one < two)
+            
 
 def submit(data):
     time = datetime.now(est)
