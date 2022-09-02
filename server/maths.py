@@ -23,7 +23,7 @@ def getDay():
 
 def getOffset():
     tz = timezone('US/Eastern')
-    return datetime.now().hour - datetime.now(tz).hour
+    return datetime.now(tz).hour - datetime.now().hour
 
 def getCombo(lower, upper):
     combo = []
