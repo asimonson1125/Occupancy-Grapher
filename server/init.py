@@ -3,7 +3,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer
-from datetime import datetime, timedelta, strptime
+from datetime import datetime, timedelta
 from pytz import timezone
 
 est = timezone('US/Eastern')
