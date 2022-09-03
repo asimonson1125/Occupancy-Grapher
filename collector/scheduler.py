@@ -25,7 +25,8 @@ def getOffset():
 
 def getSchedule():
     schedule.clear()
-    negOffset = str((24 + getOffset()) % 24)
+    negOffset = str((24 + getOffset() + 4) % 24) 
+    # +4 so we do this at 4AM, not midnight.  Facility date may not be updated by then.
     if int(negOffset) < 10:
         negOffset = "0" + negOffset
     schedule.every().day.at(negOffset + ":00").do(getSchedule)

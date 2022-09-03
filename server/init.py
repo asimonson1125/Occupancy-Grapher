@@ -53,8 +53,8 @@ class Occupancy(db.Model):
         return self.time
     
     def __lt__(self,other):
-        one = datetime.strptime(self.time+":00", '%Y-%m-%d %H:%M:%S.%f%z')
-        two = datetime.strptime(other.time+":00", '%Y-%m-%d %H:%M:%S.%f%z')
+        one = datetime.strptime(self.time, '%Y-%m-%d %H:%M:%S.%f%z')
+        two = datetime.strptime(other.time, '%Y-%m-%d %H:%M:%S.%f%z')
         return(one < two)
             
 
@@ -64,6 +64,7 @@ def submit(data):
     date = time.date()
     hour = time.hour
     minute = time.minute
+    time = time.strftime('%Y-%m-%d %H:%M:%S.%f%z')
     print(f"\nData from {weekday}, {date} at {hour}:{minute}")
     print("Lower Fitness Center occupant count: " + data['lower'])
     print("Upper Fitness Center occupant count: " + data['upper'])
