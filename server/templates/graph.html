@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="../static/js/redirect.js"></script>
   <body>
+    <label for="birthday">Data from Date:</label>
+    <input type="date" id="dataDate" name="dataDate" />
+    <button onclick="javascript:redirectDate()">Change date</button>
+    <br/>
+    <br/>
+    {% if alert|length == 0 %}
     <canvas id="lowerChart" style="max-height: 75%; max-width: 75%"></canvas>
     <canvas id="aquaticsChart" style="max-height: 75%; max-width: 75%"></canvas>
 
@@ -73,5 +80,8 @@
         },
       });
     </script>
+    {% else %}
+    <h3>{{alert}}</h3>
+    {% endif %}
   </body>
 </html>

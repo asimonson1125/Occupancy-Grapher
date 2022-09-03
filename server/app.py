@@ -1,4 +1,4 @@
-from flask import request, render_template
+from flask import request, render_template, redirect
 from datetime import datetime, timedelta
 
 from init import app, Occupancy, submit, est
@@ -18,10 +18,13 @@ def sample():
 
 @app.route('/graphs', methods=['GET'])
 def graphs():
-    todayData = Occupancy.query.filter(Occupancy.date == str(datetime.now(est).date())).all()
+    date = request.args.get('date')
+    if date == None:
+        return redirect(f'/graphs?date={datetime.now(est).date()}')
+    todayData = Occupancy.query.filter(Occupancy.date == date).all()
     todayData.sort()
     if len(todayData) == 0:
-        return "<h1>No data for today! </h3>"
+        return render_template('graph.html', alert="No Data For Today!")
     times = maths.getDay()
     lower = []
     upper = []
