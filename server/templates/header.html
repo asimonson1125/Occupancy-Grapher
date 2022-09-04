@@ -1,0 +1,39 @@
+{% block header %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <title>CSH Jim</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="../static/js/redirect.js"></script>
+    {% block headAdditions %}{% endblock %}
+</head>
+
+<body {%block bodyAttrs %}{% endblock %}>
+    <div>
+        <nav>
+            <div class="crate">
+                <a href="/" class="nav-brand">Jim</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    {% endblock %}
+
+    <div id="container">
+        {% block content %}{% endblock %}
+    </div>
+    {% block footer %}
+    {% endblock %}
+</body>

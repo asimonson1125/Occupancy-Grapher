@@ -1,87 +1,85 @@
-<!DOCTYPE html>
-<html>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-  <script src="../static/js/redirect.js"></script>
-  <body>
-    <label for="birthday">Data from Date:</label>
-    <input type="date" id="dataDate" name="dataDate" />
-    <button onclick="javascript:redirectDate()">Change date</button>
-    <br/>
-    <br/>
-    {% if alert|length == 0 %}
-    <canvas id="lowerChart" style="max-height: 75%; max-width: 75%"></canvas>
-    <canvas id="aquaticsChart" style="max-height: 75%; max-width: 75%"></canvas>
+{% extends "header.html" %}
+{% block content %}
+<label for="dataDate">Data from Date:</label>
+<input type="date" id="dataDate" name="dataDate" />
+<button onclick="javascript:redirectDate()">Change date</button>
+<br />
+<br />
+{% if alert|length == 0 %}
+<div class="chartHolder">
+<div><canvas id="gymChart"></canvas></div>
+<div><canvas id="aquaticsChart"></canvas></div>
+</div>
 
-    <script>
-        let xVals = [];
-        let lower = [];
-        let upper = [];
-        let combo = [];
-        let aquatics = [];
-        {% for i in times %}
-        xVals.push("{{i}}");
-        {% endfor %}
-        {% for i in range(lower|length) %}
-        lower.push("{{lower[i]}}");
-        upper.push("{{upper[i]}}");
-        combo.push("{{combo[i]}}");
-        aquatics.push("{{aquatics[i]}}");
-        {% endfor %}
+<script>
+    let xVals = [];
+    let lower = [];
+    let upper = [];
+    let combo = [];
+    let aquatics = [];
+    {% for i in times %}
+    xVals.push("{{i}}");
+    {% endfor %}
+    {% for i in range(lower|length) %}
+    lower.push("{{lower[i]}}");
+    upper.push("{{upper[i]}}");
+    combo.push("{{combo[i]}}");
+    aquatics.push("{{aquatics[i]}}");
+    {% endfor %}
 
-      new Chart("lowerChart", {
-        type: "line",
-        data: {
-          labels: xVals,
-          datasets: [
-            {
-              fill: false,
-              borderColor: "rgba(0,0,255,.1)",
-              data: lower,
-            },
-            {
-              fill: false,
-              borderColor: "rgba(255,0,0,.1)",
-              data: upper
-            },
-            {
-              fill: false,
-              borderColor: "rgba(0, 255, 0, 1)",
-              data: combo
-            }
-          ],
+  new Chart("gymChart", {
+    type: "line",
+    data: {
+      labels: xVals,
+      datasets: [
+        {
+          fill: false,
+          borderColor: "rgba(0,0,255,.1)",
+          data: lower,
         },
-        options: {
-          legend: { display: false },
-          scales: {
-            yAxes: [{ ticks: { min: 0, max: 170 } }],
-          },
+        {
+          fill: false,
+          borderColor: "rgba(255,0,0,.1)",
+          data: upper
         },
-      });
+        {
+          fill: false,
+          borderColor: "rgba(0, 255, 0, 1)",
+          data: combo
+        }
+      ],
+    },
+    options: {
+      legend: { display: false },
+      scales: {
+        yAxes: [{ ticks: { min: 0, max: 170 } }],
+      },
+    },
+  });
 
-      new Chart("aquaticsChart", {
-        type: "line",
-        data: {
-          labels: xVals,
-          datasets: [
-            {
-              fill: false,
-              lineTension: 0,
-              backgroundColor: "rgba(0,0,255,1.0)",
-              borderColor: "rgba(0,0,255,0.1)",
-              data: aquatics,
-            },
-          ],
+  new Chart("aquaticsChart", {
+    type: "line",
+    data: {
+      labels: xVals,
+      datasets: [
+        {
+          fill: false,
+          lineTension: 0,
+          backgroundColor: "rgba(0,0,255,1.0)",
+          borderColor: "rgba(0,0,255,0.1)",
+          data: aquatics,
         },
-        options: {
-          legend: { display: false },
-          scales: {
-            yAxes: [{ ticks: { min: 0, max: 120 } }],
-          },
-        },
-      });
-    </script>
-    {% else %}
-    <h3>{{alert}}</h3>
-    {% endif %}
-  </body>
-</html>
+      ],
+    },
+    options: {
+      legend: { display: false },
+      scales: {
+        yAxes: [{ ticks: { min: 0, max: 120 } }],
+      },
+    },
+  });
+</script>
+{% else %}
+<h3>{{alert}}</h3>
+{% endif %}
+{% endblock %}

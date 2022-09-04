@@ -18,7 +18,7 @@ def sample():
 
 @app.route('/')
 def home():
-    return "<h1>home</h1>"
+    return redirect('/graphs')
 
 @app.route('/graphs', methods=['GET'])
 def graphs():
