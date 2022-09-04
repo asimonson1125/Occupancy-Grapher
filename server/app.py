@@ -16,10 +16,14 @@ def sample():
     day = maths.getDay()
     return render_template("graph.html", template_folder='templates', lower=[2,3,4,5,4,3,2], times=day)
 
+@app.route('/')
+def home():
+    return "<h1>home</h1>"
+
 @app.route('/graphs', methods=['GET'])
 def graphs():
     date = request.args.get('date')
-    if date == None:
+    if date == None or date == '':
         return redirect(f'/graphs?date={datetime.now(est).date()}')
     todayData = Occupancy.query.filter(Occupancy.date == date).all()
     todayData.sort()
