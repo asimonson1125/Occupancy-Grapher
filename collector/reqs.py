@@ -36,12 +36,12 @@ def parse(s):
 # document.querySelector('.columns table').querySelectorAll('tr')[1].querySelectorAll('td')[2].textContent.split(' ')
 # Making a GET request
 def getStartEndHour():
-       r = requests.get("https://www.rit.edu/fa/arenas/gordon-field-house/facility-hours")
+       r = requests.get("https://www.rit.edu/fitnessrecreation/facility-hours")
        
        # Parsing the HTML
        soup = BeautifulSoup(r.content, 'html.parser')
-
-       s = soup.find('div', class_='columns').find('table').find_all('tr')[1].find_all('td')[2]
+       
+       s = soup.select_one(".facility-hours td")
        content = s.string.split(' ')
 
        return(parse(content[0]), parse(content[2]))
