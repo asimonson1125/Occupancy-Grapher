@@ -73,4 +73,7 @@ def submit(data):
     db.session.add(occupancy)
     db.session.commit()
 
-db.create_all()
+try:
+    db.create_all()
+except:
+    pass

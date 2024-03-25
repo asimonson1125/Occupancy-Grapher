@@ -1,5 +1,8 @@
-from flask import request, render_template, redirect
-from datetime import datetime, timedelta
+from flask import request, render_template, redirect, Response
+from datetime import datetime
+from sqlalchemy import cast, between
+import pandas as pd
+import json
 
 from init import app, Occupancy, submit, est
 import maths
@@ -49,5 +52,30 @@ def graphs():
     combo = maths.getCombo(lower, upper)
     return render_template("graph.html", template_folder='templates', lower=lower, upper=upper, combo=combo,  aquatics=aquatics, times=times)
 
+# def getDataset():
+#     start = request.args.get('start')
+#     end = request.args.get('end')
+    
+#     if start == None or start == '':
+#         start = datetime.now(est).date()
+#     if end == None or end == '':
+#         end = datetime.now(est).date()
+#    data = Occupancy.query.filter(between(cast(Occupancy.date, Date), start_date, end_date)).all()
+
+@app.route('/download-the-kitchen-sink')
+def downloadingEverything():
+    data = Occupancy.query.all()
+    keys = data[0].to_json().keys()
+    out = ','.join(keys)
+    for datapoint in data:
+        out += "\n"
+        for key in keys:
+            out += str(datapoint.__getattribute__(key)) + ","
+        out = out[:-1]
+    response = Response(out, mimetype="text/csv", direct_passthrough=True)
+    response.headers.set('Content-Disposition', 'attachment', filename=f"occupyRIT-{datetime.now(est).date()}")
+    return response
+        
+        
 if __name__ == '__main__':
     app.run()
