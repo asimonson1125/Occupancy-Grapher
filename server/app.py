@@ -1,9 +1,6 @@
 from flask import request, render_template, redirect, Response
 from datetime import datetime
 from sqlalchemy import cast, between
-import pandas as pd
-import json
-
 from init import app, Occupancy, submit, est
 import maths
 
